@@ -1,27 +1,46 @@
-apply plugin: 'java'
+plugins {
+    id 'java'
+}
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    compile 'net.portswigger.burp.extender:burp-extender-api:1.7.13'
-    compile group: 'com.google.code.gson', name: 'gson', version: '2.8.5'
+    // `compile` was deprecated in Gradle 4.10 and removed in Gradle 7, which made the build fail
+    // before it reached a single source file.
+    implementation 'net.portswigger.burp.extender:burp-extender-api:1.7.13'
+    implementation 'com.google.code.gson:gson:2.8.5'
 }
 
-targetCompatibility = '1.8'
-sourceCompatibility = '1.8'
+java {
+    // Burp loads extensions with its own JVM; keep the bytecode level it has always targeted.
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
 
 sourceSets {
     main {
+        // The sources live in main/java, not src/. The old `srcDir 'src'` pointed at a directory
+        // that does not exist in this repository, so nothing was ever compiled from it.
         java {
-            srcDir 'src'
+            srcDirs = ['main/java']
+        }
+        resources {
+            srcDirs = ['main/resources']
         }
     }
 }
 
-task fatJar(type: Jar) {
-    baseName = project.name + '-all'
-    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+tasks.register('fatJar', Jar) {
+    archiveBaseName = project.name + '-all'
+    // Burp needs one self-contained jar: gson has to travel with the extension.
+    from {
+        configurations.runtimeClasspath
+                .filter { it.name.startsWith('gson') }
+                .collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    // Several dependencies ship the same metadata entries; without this Gradle 7 fails the task.
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     with jar
 }
