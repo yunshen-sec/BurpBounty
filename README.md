@@ -1,3 +1,14 @@
+> **This is a community-maintained fork.**
+>
+> The original [wagiro/BurpBounty](https://github.com/wagiro/BurpBounty) has had no commits
+> since March 2023. This fork exists to keep the extension building and usable. All credit for
+> the design and implementation belongs to the upstream author; the project stays under the same
+> Apache-2.0 licence, reproduced unchanged in [LICENCE](./LICENCE).
+>
+> Maintainer of this fork: secx — not affiliated with the upstream author.
+>
+> Changes made here are listed in [FORK_CHANGELOG.md](./FORK_CHANGELOG.md).
+
 
 [![GitHub release](https://img.shields.io/github/release/wagiro/BurpBounty.svg)](https://github.com/wagiro/BurpBounty/releases) 
 [![GitHub issues](https://img.shields.io/github/issues/wagiro/BurpBounty.svg)](https://github.com/wagiro/BurpBounty/issues) 
