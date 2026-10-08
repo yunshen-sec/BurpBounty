@@ -5,7 +5,7 @@
 > the design and implementation belongs to the upstream author; the project stays under the same
 > Apache-2.0 licence, reproduced unchanged in [LICENCE](./LICENCE).
 >
-> Maintainer of this fork: secx — not affiliated with the upstream author.
+> Maintainer of this fork: 云深 — not affiliated with the upstream author.
 >
 > Changes made here are listed in [FORK_CHANGELOG.md](./FORK_CHANGELOG.md).
 
